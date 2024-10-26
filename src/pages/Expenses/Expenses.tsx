@@ -1,14 +1,5 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Toolbar,
-  Typography,
-} from "@mui/material"
-import MenuIcon from "@mui/icons-material/Menu"
+import { Container, Stack } from "@mui/material"
+
 import s from "./styles.module.scss"
 
 export const TEST_ID = "Expenses"
@@ -45,30 +36,11 @@ const Expenses = () => {
       className={s.expenses}
       data-testid={TEST_ID}
     >
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              News
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-        <div className={s.expensesContent}>
-          {expenses.map(({ id, type }) => (
-            <Stack key={id}>{type}</Stack>
-          ))}
-        </div>
-      </Box>
+      <div className={s.expensesContent}>
+        {expenses.map(({ id, type }) => (
+          <Stack key={id}>{type}</Stack>
+        ))}
+      </div>
     </Container>
   )
 }
