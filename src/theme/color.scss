@@ -1,0 +1,139 @@
+// background
+$background-White-100: #ffffff;
+$background-White-30: #ffffff4d;
+$background-White-20: #ffffff33;
+
+$background-Grey-100: #1d1d1d;
+$background-Grey-90: #393939;
+$background-Grey-80: #1d1d1dcc;
+$background-Grey-60: #1d1d1d99;
+$background-Grey-50: #1d1d1d80;
+$background-Grey-30: #1d1d1d4d;
+$background-Grey-10: #1d1d1d1a;
+
+$background-red-100: #ff0a56;
+
+$background-light-grey: #f0f0f0;
+
+$background-lime: #7fff00;
+
+// stroke
+$stroke-white-100: #ffffff;
+$stroke-Grey-100: #1d1d1d;
+$stroke-white-30: #ffffff4d;
+$stroke-grey-10: #1d1d1d1a;
+
+$stroke-red-100: #ff0a56;
+
+//Typography & text
+$text-color-white-100: #ffffff;
+$text-color-white-50: #ffffff80;
+$text-color-grey-100: #1d1d1d;
+$text-color-grey-50: #1d1d1d80;
+$text-color-grey-60: #1d1d1d99;
+
+$primary-text: #1d1d1d;
+$secondary-text: #ffffff;
+$error-text: #ff0a56;
+$red-text: #ff0a56;
+$lime-text: #7fff00;
+$disabled-text: #1d1d1d4d;
+$primary-border: #ffffff;
+$secondary-border: #1d1d1d;
+
+// Divider ==========
+$black-divider-background: #1d1d1d;
+$white-divider-background: #ffffff;
+$grey-divider-background: #1d1d1d1a;
+
+// Bottom sheet ==========
+$bottom-sheet-background-white: #ffffff;
+$bottom-sheet-background-grey: #e8e8e8;
+$bottom-sheet-backdrop-background: rgba(29, 29, 29, 30%);
+
+// Bottom navigation ==========
+$bottom-navigation-background-light: #ffffff99;
+$bottom-navigation-background-dark: #1d1d1d99;
+
+// TabButtons ==========
+$tab-buttons-background: #1d1d1d1a;
+$tab-buttons-btn: #f0f0f0;
+$tab-buttons-btn-active: #ffffff;
+
+// input ==========
+$input-primary-background: #f4f4f4;
+$input-secondary-background: #1d1d1d;
+
+// PinInput ==========
+$pin-input-background: #ffffff;
+$pin-input-border-bottom: #ffffff66;
+$pin-input-border-bottom-error: #ff0a56;
+
+// Card ==========
+$card-background-white: #ffffff;
+$card-background-grey: #dddddd;
+
+// Notice ==========
+$notice-background-success: #7fff00;
+$notice-background-warning: #ffe923;
+$notice-background-error: #db2c2c;
+$notice-background-info: #f0f0f0;
+
+// Search ==========
+$search-background-grey: $background-Grey-10;
+$search-caret-color: #7fff00;
+
+// FilterMenu ==========
+$filter-menu-background: #e8e8e8;
+
+// Point ==========
+$point-end-background: #262626;
+$sizes-background-black: #1d1d1d;
+
+// CheckBox ==========
+$checkbox-no-active-background-color-grey: #1d1d1d1a;
+$checkbox-no-active-background-color-lightgrey: #ffffff50;
+$checkbox-active-background-color-green: #7fff00;
+$checkbox-after-background-color-white: #ffffff;
+
+// Edit ==========
+$edit-avatar-button-background-color: #f4f4f4;
+$edit-avatar-profile-icon-background-color: #ffffff;
+
+// Edit ==========
+$profile-invite-banner-background-color: #7fff00;
+
+// AreaGraphic ==========
+$tooltip-item-background-color: #dc01ff;
+$graphic-background-color: #2c2c2c;
+
+// SwiperPicker ==========
+$swiper-picker-background-line: #7fff00;
+
+// DatePicker ==========
+$date-picker-background-active: #1d1d1d;
+
+// SplashScreen ==========
+$splash-screen-background: #1d1d1d;
+
+// Onboarding ==========
+$onboarding-caret-color: #adfa2e;
+$onboarding-button-color-grey: #545454;
+$onboarding-button-color-lime: #7fff00;
+$onboarding-loading-bar-background: #272727;
+
+// PaySubscribe ==========
+$pay-subscribe-background: #7fff00;
+
+// BodyMassIndex ==========
+$bodymassindex-background-color: #2c2c2c;
+
+// CircularProgressbar
+$circular-progressbar-track-color: #ffffff66;
+$circular-progressbar-indicator-color: #7fff00;
+
+// Stepmeter
+$stepmeter-background: #2c2c2c;
+$stepmeter-tooltip-background: #ffffff1a;
+$stepmeter-progress-indicator: #db00ff;
+$stepmeter-progress-indicator-done: #7fff00;

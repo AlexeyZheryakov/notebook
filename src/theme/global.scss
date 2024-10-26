@@ -1,0 +1,21 @@
+@import "./index.scss";
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  color: $primary-text;
+  font-family: $font-family;
+  font-weight: $font-weight-primary;
+  font-size: $font-size-primary;
+
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
