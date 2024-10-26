@@ -17,7 +17,7 @@ export default defineConfig({
     svgr(),
     compression(),
     eslint(),
-    Inspector(),
+    // Inspector(),
     envCompatible(),
     VitePWA({
       registerType: "autoUpdate",
