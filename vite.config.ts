@@ -22,19 +22,55 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My App",
-        short_name: "App",
+        name: "My PWA App",
+        short_name: "PWA App",
+        description: "A sample PWA application",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "icon-192x192.png",
-            sizes: "192x192",
+            src: "logo192.png",
             type: "image/png",
+            sizes: "192x192",
           },
           {
-            src: "icon-512x512.png",
-            sizes: "512x512",
+            src: "logo256.png",
             type: "image/png",
+            sizes: "256x256",
+          },
+          {
+            src: "logo384.png",
+            type: "image/png",
+            sizes: "384x384",
+          },
+          {
+            src: "logo512.png",
+            type: "image/png",
+            sizes: "512x512",
+          },
+        ],
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts-stylesheets",
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts-webfonts",
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "images",
+            },
           },
         ],
       },
