@@ -12,7 +12,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getRouteExpenses, getRouteMain } from "@/routes/router"
+import {
+  getRouteExpenses,
+  getRouteExpensesCreate,
+  getRouteMain,
+} from "@/routes/router"
 
 const App = () => {
   const navigate = useNavigate()
@@ -74,6 +78,16 @@ const App = () => {
                 }}
               >
                 <Typography sx={{ textAlign: "center" }}>Расходы</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(getRouteExpensesCreate())
+                  handleCloseMenu()
+                }}
+              >
+                <Typography sx={{ textAlign: "center" }}>
+                  Расходы добавить
+                </Typography>
               </MenuItem>
             </Menu>
           </Toolbar>
