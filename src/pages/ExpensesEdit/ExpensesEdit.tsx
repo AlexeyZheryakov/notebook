@@ -1,8 +1,12 @@
-import { Container, TextField } from "@mui/material"
+import { Button, Container, TextField } from "@mui/material"
 import s from "./styles.module.scss"
 import { forwardRef, useState } from "react"
 import type { NumericFormatProps } from "react-number-format"
 import { NumericFormat } from "react-number-format"
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker"
+import dayjs from "dayjs"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 
 export const TEST_ID = "ExpensesEdit"
 
@@ -82,6 +86,27 @@ const ExpensesEdit = () => {
           variant="standard"
           margin="normal"
         />
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <MobileDatePicker
+            slots={{
+              textField: props => (
+                <TextField
+                  {...props}
+                  label="Дата"
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                />
+              ),
+            }}
+            format="DD.MM.YYYY"
+            defaultValue={dayjs(new Date())}
+          />
+        </LocalizationProvider>
+        <Button sx={{ marginTop: "100px" }} fullWidth variant="contained">
+          Добавить
+        </Button>
       </div>
     </Container>
   )
