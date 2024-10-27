@@ -22,28 +22,29 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My PWA App",
-        short_name: "PWA App",
-        description: "A sample PWA application",
+        name: "NOTEBOOK",
+        short_name: "NOTEBOOK",
+        display: "fullscreen",
+        description: "Notepad, designed by Alexey Zheryakov",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "logo192.png",
+            src: "icon_192.png",
             type: "image/png",
             sizes: "192x192",
           },
           {
-            src: "logo256.png",
+            src: "icon_256.png",
             type: "image/png",
             sizes: "256x256",
           },
           {
-            src: "logo384.png",
+            src: "icon_384.png",
             type: "image/png",
             sizes: "384x384",
           },
           {
-            src: "logo512.png",
+            src: "icon_512.png",
             type: "image/png",
             sizes: "512x512",
           },
