@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box maxWidth={"444px"} margin={"0 auto"} sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
             <Typography

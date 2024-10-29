@@ -2,9 +2,11 @@ import type { ThunkAction, Action, Reducer } from "@reduxjs/toolkit"
 import { configureStore, combineReducers, createAction } from "@reduxjs/toolkit"
 
 import scrollSaveReducer from "./scrollSave/slice"
+import expensesReducer from "./expenses/slice"
 
 const combineReducer = combineReducers({
   scrollSaveStore: scrollSaveReducer,
+  expensesStore: expensesReducer,
 })
 
 const REMOVE_STORE_ACTION_TYPE = "removeStore"
