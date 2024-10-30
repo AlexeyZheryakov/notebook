@@ -7,6 +7,9 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker"
 import dayjs from "dayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import { useAppDispatch } from "@/hooks"
+import { addExpense } from "@/redux/expenses/slice"
+import { format } from "date-fns"
 
 export const TEST_ID = "ExpensesEdit"
 
@@ -33,15 +36,19 @@ const NumericFormatCustom = forwardRef<NumericFormatProps, CustomProps>(
         }}
         thousandSeparator
         valueIsNumericString
-        prefix="₽"
+        prefix="₽ "
       />
     )
   },
 )
 
 const ExpensesEdit = () => {
+  const dispatch = useAppDispatch()
+
   const [values, setValues] = useState({
-    numberformat: "",
+    cost: "",
+    category: "",
+    description: "",
   })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +57,18 @@ const ExpensesEdit = () => {
       [event.target.name]: event.target.value,
     })
   }
+
+  const handleAddExpense = () => {
+    dispatch(
+      addExpense({
+        ...values,
+        id: Date.now(),
+        date: format(new Date(), "dd.MM.yyyy"),
+      }),
+    )
+  }
+
+  console.log(values)
 
   return (
     <Container
@@ -62,22 +81,25 @@ const ExpensesEdit = () => {
         <TextField
           label="Категория"
           variant="standard"
+          name="category"
           fullWidth
           margin="normal"
+          onChange={handleChange}
         />
         <TextField
           label="Описание"
           variant="standard"
+          name="description"
           fullWidth
           margin="normal"
+          onChange={handleChange}
         />
         <TextField
           fullWidth
           label="Сумма"
-          value={values.numberformat}
+          value={values.cost}
           onChange={handleChange}
-          name="numberformat"
-          id="formatted-numberformat-input"
+          name="cost"
           slotProps={{
             input: {
               inputComponent: NumericFormatCustom as any,
@@ -104,7 +126,12 @@ const ExpensesEdit = () => {
             defaultValue={dayjs(new Date())}
           />
         </LocalizationProvider>
-        <Button sx={{ marginTop: "100px" }} fullWidth variant="contained">
+        <Button
+          onClick={handleAddExpense}
+          sx={{ marginTop: "100px" }}
+          fullWidth
+          variant="contained"
+        >
           Добавить
         </Button>
       </div>

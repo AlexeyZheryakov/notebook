@@ -9,9 +9,9 @@ const defaultExpenses = localStorage.getItem(NAME)
 
 interface IExpense {
   id: number
-  type: string
+  category: string
   description: string
-  cost: number
+  cost: string
   date: string
 }
 
@@ -38,6 +38,6 @@ export const expensesSlice = createSlice({
   },
 })
 
-export const { clearExpense } = expensesSlice.actions
+export const { addExpense, clearExpense } = expensesSlice.actions
 
 export default expensesSlice.reducer
