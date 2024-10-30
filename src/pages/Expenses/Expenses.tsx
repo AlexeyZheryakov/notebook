@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material"
+import { Box, Container, Stack, Typography } from "@mui/material"
 
 import s from "./styles.module.scss"
 import { useAppSelector } from "@/hooks"
@@ -16,8 +16,23 @@ const Expenses = () => {
       data-testid={TEST_ID}
     >
       <div className={s.expensesContent}>
-        {expenses.map(({ id, type }) => (
-          <Stack key={id}>{type}</Stack>
+        {expenses.map(({ id, category, cost, description, date }) => (
+          <Stack
+            alignItems="center"
+            justifyContent="space-between"
+            direction="row"
+            key={id}
+            sx={{ borderBottom: "1px solid grey", padding: "10px 0" }}
+          >
+            <Box>
+              <Typography> {category}</Typography>
+              <Typography> {description}</Typography>
+            </Box>
+            <Box>
+              <Typography> {cost}</Typography>
+              <Typography> {date}</Typography>
+            </Box>
+          </Stack>
         ))}
       </div>
     </Container>
