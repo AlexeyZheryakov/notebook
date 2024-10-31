@@ -16,6 +16,7 @@ import {
   getRouteExpenses,
   getRouteExpensesCreate,
   getRouteMain,
+  getRouteSettings,
 } from "@/routes/router"
 
 const App = () => {
@@ -88,6 +89,14 @@ const App = () => {
                 <Typography sx={{ textAlign: "center" }}>
                   Расходы добавить
                 </Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(getRouteSettings())
+                  handleCloseMenu()
+                }}
+              >
+                <Typography sx={{ textAlign: "center" }}>Настройки</Typography>
               </MenuItem>
             </Menu>
           </Toolbar>

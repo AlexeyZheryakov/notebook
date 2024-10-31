@@ -1,12 +1,19 @@
-import { Box, Container, Stack, Typography } from "@mui/material"
+import { Box, Button, Container, Stack, Typography } from "@mui/material"
 
 import s from "./styles.module.scss"
-import { useAppSelector } from "@/hooks"
+import { useAppDispatch, useAppSelector } from "@/hooks"
+import { clearExpense } from "@/redux/expenses/slice"
 
 export const TEST_ID = "Expenses"
 
 const Expenses = () => {
+  const dispatch = useAppDispatch()
+
   const { expenses } = useAppSelector(state => state.expensesStore)
+
+  const handleRemoveExpense = (id: number) => () => {
+    dispatch(clearExpense(id))
+  }
 
   return (
     <Container
@@ -25,12 +32,15 @@ const Expenses = () => {
             sx={{ borderBottom: "1px solid grey", padding: "10px 0" }}
           >
             <Box>
-              <Typography> {category}</Typography>
-              <Typography> {description}</Typography>
+              <Typography>{category}</Typography>
+              <Typography>{description}</Typography>
             </Box>
             <Box>
-              <Typography> {cost}</Typography>
-              <Typography> {date}</Typography>
+              <Typography>{cost} ₽</Typography>
+              <Typography>{date}</Typography>
+              <Button onClick={handleRemoveExpense(id)} variant="contained">
+                удалить
+              </Button>
             </Box>
           </Stack>
         ))}
