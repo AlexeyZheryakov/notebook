@@ -10,6 +10,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { useAppDispatch } from "@/hooks"
 import { addExpense } from "@/redux/expenses/slice"
 import { format } from "date-fns"
+import { useNavigate } from "react-router-dom"
 
 export const TEST_ID = "ExpensesEdit"
 
@@ -43,6 +44,8 @@ const NumericFormatCustom = forwardRef<NumericFormatProps, CustomProps>(
 )
 
 const ExpensesEdit = () => {
+  const navigate = useNavigate()
+
   const dispatch = useAppDispatch()
 
   const [values, setValues] = useState({
@@ -66,6 +69,12 @@ const ExpensesEdit = () => {
         date: format(new Date(), "dd.MM.yyyy"),
       }),
     )
+    setValues({
+      cost: "",
+      category: "",
+      description: "",
+    })
+    navigate(-1)
   }
 
   console.log(values)
@@ -85,6 +94,7 @@ const ExpensesEdit = () => {
           fullWidth
           margin="normal"
           onChange={handleChange}
+          value={values.category}
         />
         <TextField
           label="Описание"
@@ -93,6 +103,7 @@ const ExpensesEdit = () => {
           fullWidth
           margin="normal"
           onChange={handleChange}
+          value={values.description}
         />
         <TextField
           fullWidth
@@ -124,13 +135,22 @@ const ExpensesEdit = () => {
             }}
             format="DD.MM.YYYY"
             defaultValue={dayjs(new Date())}
+            onChange={date => {
+              console.log(date)
+            }}
           />
         </LocalizationProvider>
         <Button
           onClick={handleAddExpense}
-          sx={{ marginTop: "100px" }}
+          sx={{
+            position: "absolute",
+            bottom: "20px",
+            right: 0,
+            left: 0,
+          }}
           fullWidth
           variant="contained"
+          disabled={!values.cost || !values.category || !values.description}
         >
           Добавить
         </Button>

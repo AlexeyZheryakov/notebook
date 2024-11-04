@@ -5,12 +5,14 @@ import {
   getRouteExpensesDetails,
   getRouteExpensesEdit,
   getRouteMain,
+  getRouteNotes,
   getRouteSettings,
 } from "./router"
 import { Main } from "@/pages/Main"
 import { Expenses } from "@/pages/Expenses"
 import { ExpensesEdit } from "@/pages/ExpensesEdit"
 import { Settings } from "@/pages/Settings"
+import { Notes } from "@/pages/Notes"
 
 const Router = () => {
   return (
@@ -21,6 +23,7 @@ const Router = () => {
       <Route path={getRouteExpensesEdit(":id")} element={<ExpensesEdit />} />
       <Route path={getRouteExpensesDetails(":id")} element={<></>} />
       <Route path={getRouteSettings()} element={<Settings />} />
+      <Route path={getRouteNotes()} element={<Notes />} />
       <Route path="*" element={<></>} />
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>

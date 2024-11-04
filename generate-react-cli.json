@@ -1,0 +1,50 @@
+{
+  "usesTypeScript": true,
+  "usesCssModule": true,
+  "cssPreprocessor": "scss",
+  "testLibrary": "Testing Library",
+  "component": {
+    "default": {
+      "customTemplates": {
+        "component": "templates/default/TemplateName.tsx",
+        "style": "templates/default/styles.module.scss",
+        "test": "templates/default/index.test.tsx",
+        "index": "templates/default/index.tsx"
+      },
+      "path": "src/components",
+      "withStyle": true,
+      "withTest": true,
+      "withStory": false,
+      "withLazy": false,
+      "withIndex": true
+    },
+    "page": {
+      "customTemplates": {
+        "component": "templates/page/TemplateName.tsx",
+        "style": "templates/page/styles.module.scss",
+        "test": "templates/page/index.test.tsx",
+        "lazy": "templates/page/index.tsx"
+      },
+      "path": "src/pages",
+      "withLazy": true,
+      "withStory": false,
+      "withStyle": true,
+      "withTest": true
+    },
+    "bottomSheet": {
+      "customTemplates": {
+        "component": "templates/bottomSheet/TemplateName.tsx",
+        "style": "templates/bottomSheet/styles.module.scss",
+        "test": "templates/bottomSheet/index.test.tsx",
+        "index": "templates/bottomSheet/index.tsx"
+      },
+      "path": "src/components",
+      "withStyle": true,
+      "withTest": true,
+      "withStory": false,
+      "withLazy": false,
+      "withIndex": true
+    }
+  },
+  "usesStyledComponents": false
+}

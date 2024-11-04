@@ -2,10 +2,14 @@ import Router from "@/routes"
 import "./index.scss"
 import {
   AppBar,
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
+  Container,
   IconButton,
   Menu,
   MenuItem,
+  Paper,
   Toolbar,
   Typography,
 } from "@mui/material"
@@ -16,8 +20,13 @@ import {
   getRouteExpenses,
   getRouteExpensesCreate,
   getRouteMain,
+  getRouteNotes,
   getRouteSettings,
 } from "@/routes/router"
+import HomeMaxIcon from "@mui/icons-material/HomeMax"
+import NotesIcon from "@mui/icons-material/Notes"
+import CurrencyRubleIcon from "@mui/icons-material/CurrencyRuble"
+import SettingsIcon from "@mui/icons-material/Settings"
 
 const App = () => {
   const navigate = useNavigate()
@@ -29,9 +38,24 @@ const App = () => {
     setAnchorEl(event.currentTarget)
   }
 
+  const [value, setValue] = useState("main")
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue)
+  }
+
   return (
-    <>
-      <Box maxWidth={"444px"} margin={"0 auto"} sx={{ flexGrow: 1 }}>
+    <Container
+      disableGutters
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        overflow: "hidden",
+      }}
+    >
+      {/* <Box margin={"0 auto"}>
         <AppBar position="static">
           <Toolbar>
             <Typography
@@ -101,10 +125,45 @@ const App = () => {
             </Menu>
           </Toolbar>
         </AppBar>
+      </Box> */}
+
+      <Box flexGrow={1} sx={{ overflow: "hidden" }}>
+        <Router />
       </Box>
 
-      <Router />
-    </>
+      <Paper elevation={3}>
+        <BottomNavigation
+          sx={{ maxWidth: "444px", margin: "0 auto" }}
+          value={value}
+          onChange={handleChange}
+        >
+          <BottomNavigationAction
+            label="Главная"
+            value="main"
+            icon={<HomeMaxIcon />}
+            onClick={() => navigate(getRouteMain())}
+          />
+          <BottomNavigationAction
+            label="Заметки"
+            value="notes"
+            icon={<NotesIcon />}
+            onClick={() => navigate(getRouteNotes())}
+          />
+          <BottomNavigationAction
+            label="Расходы"
+            value="expenses"
+            icon={<CurrencyRubleIcon />}
+            onClick={() => navigate(getRouteExpenses())}
+          />
+          <BottomNavigationAction
+            label="Настройки"
+            value="settings"
+            icon={<SettingsIcon />}
+            onClick={() => navigate(getRouteSettings())}
+          />
+        </BottomNavigation>
+      </Paper>
+    </Container>
   )
 }
 
