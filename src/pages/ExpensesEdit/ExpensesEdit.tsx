@@ -1,4 +1,4 @@
-import { Button, Container, TextField } from "@mui/material"
+import { Box, Button, Container, TextField } from "@mui/material"
 import s from "./styles.module.scss"
 import { forwardRef, useState } from "react"
 import type { NumericFormatProps } from "react-number-format"
@@ -61,7 +61,8 @@ const ExpensesEdit = () => {
     })
   }
 
-  const handleAddExpense = () => {
+  const handleAddExpense = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     dispatch(
       addExpense({
         ...values,
@@ -85,6 +86,8 @@ const ExpensesEdit = () => {
       maxWidth="xs"
       className={s.expensesEdit}
       data-testid={TEST_ID}
+      component={"form"}
+      onSubmit={handleAddExpense}
     >
       <div className={s.expensesEditContent}>
         <TextField
@@ -140,20 +143,25 @@ const ExpensesEdit = () => {
             }}
           />
         </LocalizationProvider>
-        <Button
-          onClick={handleAddExpense}
+
+        <Box
+          padding="20px"
           sx={{
             position: "absolute",
-            bottom: "20px",
+            bottom: 0,
             right: 0,
             left: 0,
           }}
-          fullWidth
-          variant="contained"
-          disabled={!values.cost || !values.category || !values.description}
         >
-          Добавить
-        </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            disabled={!values.cost || !values.category || !values.description}
+            type="submit"
+          >
+            Добавить
+          </Button>
+        </Box>
       </div>
     </Container>
   )
