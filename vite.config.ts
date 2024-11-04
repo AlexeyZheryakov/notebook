@@ -24,7 +24,7 @@ export default defineConfig({
       manifest: {
         name: "NOTEBOOK",
         short_name: "NOTEBOOK",
-        display: "fullscreen",
+        // display: "fullscreen",
         description: "Notepad, designed by Alexey Zheryakov",
         theme_color: "#ffffff",
         icons: [
