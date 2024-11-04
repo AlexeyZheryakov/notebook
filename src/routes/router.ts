@@ -6,6 +6,9 @@ export enum AppRoutes {
 export const getRouteMain = () => "/"
 export const getRouteExpenses = () => "/expenses"
 export const getRouteExpensesCreate = () => "/expenses/new"
-export const getRouteExpensesEdit = (id: string) => `/expenses/${id}/edit`
-export const getRouteExpensesDetails = (id: string) => `/expenses/${id}`
+export const getRouteExpensesEdit = (id: string | number) =>
+  `/expenses/${id}/edit`
+export const getRouteExpensesDetails = (id: string | number) =>
+  `/expenses/${id}`
 export const getRouteSettings = () => "/settings"
+export const getRouteNotes = () => "/notes"
