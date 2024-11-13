@@ -2,10 +2,10 @@ import { lazy, Suspense } from "react"
 
 import Loading from "@/components/Loading"
 
-const LazyTemplateName = lazy(() => import("./TemplateName"))
+const LazyNotesEdit = lazy(() => import("./NotesEdit"))
 
-export const TemplateName = () => (
+export const NotesEdit = () => (
   <Suspense fallback={<Loading />}>
-    <LazyTemplateName />
+    <LazyNotesEdit />
   </Suspense>
 )

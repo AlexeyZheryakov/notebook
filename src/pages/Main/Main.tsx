@@ -1,7 +1,6 @@
-import { Container } from "@mui/material"
-
-import s from "./styles.module.scss"
+import { Container, Typography } from "@mui/material"
 import { useAppSelector } from "@/hooks"
+import s from "./styles.module.scss"
 
 export const TEST_ID = "Main"
 
@@ -20,7 +19,9 @@ const Main = () => {
       className={s.main}
       data-testid={TEST_ID}
     >
-      <div className={s.mainContent}>Расходы {sumOfExpenses}₽</div>
+      <div className={s.mainContent}>
+        <Typography>Расходы {sumOfExpenses}₽</Typography>
+      </div>
     </Container>
   )
 }

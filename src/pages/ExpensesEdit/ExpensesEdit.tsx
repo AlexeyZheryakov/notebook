@@ -61,7 +61,7 @@ const ExpensesEdit = () => {
     })
   }
 
-  const handleAddExpense = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(
       addExpense({
@@ -87,7 +87,7 @@ const ExpensesEdit = () => {
       className={s.expensesEdit}
       data-testid={TEST_ID}
       component={"form"}
-      onSubmit={handleAddExpense}
+      onSubmit={handleSubmit}
     >
       <div className={s.expensesEditContent}>
         <TextField
