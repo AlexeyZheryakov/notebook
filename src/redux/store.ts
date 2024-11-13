@@ -3,10 +3,12 @@ import { configureStore, combineReducers, createAction } from "@reduxjs/toolkit"
 
 import scrollSaveReducer from "./scrollSave/slice"
 import expensesReducer from "./expenses/slice"
+import notesReducer from "./notes/slice"
 
 const combineReducer = combineReducers({
   scrollSaveStore: scrollSaveReducer,
   expensesStore: expensesReducer,
+  notesStore: notesReducer,
 })
 
 const REMOVE_STORE_ACTION_TYPE = "removeStore"
