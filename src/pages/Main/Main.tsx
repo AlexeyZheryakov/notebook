@@ -1,16 +1,40 @@
-import { Container, Typography } from "@mui/material"
 import { useAppSelector } from "@/hooks"
+import type { IExpense } from "@/redux/expenses/slice"
+import {
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material"
 import s from "./styles.module.scss"
+import { useState } from "react"
 
 export const TEST_ID = "Main"
 
 const Main = () => {
+  const [month, setMonth] = useState("all")
+
   const { expenses } = useAppSelector(state => state.expensesStore)
 
-  const sumOfExpenses = expenses.reduce(
-    (acc, { cost }) => acc + Number(cost),
-    0,
+  const expensesByMonth = expenses.reduce(
+    (acc, exp) => {
+      const [_, month, year] = exp.date.split(".")
+
+      const key = `${month}.${year}`
+
+      if (acc[key]) acc[key].push(exp)
+      else acc[key] = [exp]
+
+      return acc
+    },
+    {} as Record<string, IExpense[]>,
   )
+
+  const sumOfExpenses = (
+    month === "all" ? expenses : expensesByMonth[month]
+  ).reduce((acc, { cost }) => acc + Number(cost), 0)
 
   return (
     <Container
@@ -20,7 +44,25 @@ const Main = () => {
       data-testid={TEST_ID}
     >
       <div className={s.mainContent}>
-        <Typography>Расходы {sumOfExpenses}₽</Typography>
+        <FormControl variant="standard" fullWidth sx={{ mb: "10px" }}>
+          <InputLabel id="demo-simple-select-standard-label">Период</InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={month}
+            onChange={e => setMonth(e.target.value)}
+            label="Период"
+          >
+            <MenuItem value="all">Все</MenuItem>
+            {Object.keys(expensesByMonth).map(month => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Typography>Расходы {sumOfExpenses.toLocaleString("ru")} ₽</Typography>
       </div>
     </Container>
   )
