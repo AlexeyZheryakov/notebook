@@ -27,6 +27,9 @@ import HomeMaxIcon from "@mui/icons-material/HomeMax"
 import NotesIcon from "@mui/icons-material/Notes"
 import CurrencyRubleIcon from "@mui/icons-material/CurrencyRuble"
 import SettingsIcon from "@mui/icons-material/Settings"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider"
+import { ru } from "date-fns/locale"
 
 const App = () => {
   const navigate = useNavigate()
@@ -128,7 +131,9 @@ const App = () => {
       </Box> */}
 
       <Box flexGrow={1} sx={{ overflow: "hidden" }}>
-        <Router />
+        <LocalizationProvider adapterLocale={ru} dateAdapter={AdapterDateFns}>
+          <Router />
+        </LocalizationProvider>
       </Box>
 
       <Paper elevation={3}>

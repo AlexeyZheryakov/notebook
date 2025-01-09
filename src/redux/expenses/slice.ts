@@ -7,7 +7,7 @@ const defaultExpenses = localStorage.getItem(NAME)
   ? JSON.parse(localStorage.getItem(NAME) ?? "")
   : []
 
-interface IExpense {
+export interface IExpense {
   id: number
   category: string
   description: string

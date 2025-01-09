@@ -1,16 +1,13 @@
+import { useAppDispatch } from "@/hooks"
+import { addExpense } from "@/redux/expenses/slice"
 import { Box, Button, Container, TextField } from "@mui/material"
-import s from "./styles.module.scss"
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker"
+import { format } from "date-fns"
 import { forwardRef, useState } from "react"
 import type { NumericFormatProps } from "react-number-format"
 import { NumericFormat } from "react-number-format"
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker"
-import dayjs from "dayjs"
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider"
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import { useAppDispatch } from "@/hooks"
-import { addExpense } from "@/redux/expenses/slice"
-import { format } from "date-fns"
 import { useNavigate } from "react-router-dom"
+import s from "./styles.module.scss"
 
 export const TEST_ID = "ExpensesEdit"
 
@@ -54,6 +51,8 @@ const ExpensesEdit = () => {
     description: "",
   })
 
+  const [date, setDate] = useState<Date>(new Date())
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
       ...values,
@@ -67,7 +66,7 @@ const ExpensesEdit = () => {
       addExpense({
         ...values,
         id: Date.now(),
-        date: format(new Date(), "dd.MM.yyyy"),
+        date: format(date, "dd.MM.yyyy"),
       }),
     )
     setValues({
@@ -77,8 +76,6 @@ const ExpensesEdit = () => {
     })
     navigate(-1)
   }
-
-  console.log(values)
 
   return (
     <Container
@@ -123,26 +120,24 @@ const ExpensesEdit = () => {
           margin="normal"
         />
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <MobileDatePicker
-            slots={{
-              textField: props => (
-                <TextField
-                  {...props}
-                  label="Дата"
-                  variant="standard"
-                  fullWidth
-                  margin="normal"
-                />
-              ),
-            }}
-            format="DD.MM.YYYY"
-            defaultValue={dayjs(new Date())}
-            onChange={date => {
-              console.log(date)
-            }}
-          />
-        </LocalizationProvider>
+        <MobileDatePicker
+          slots={{
+            textField: props => (
+              <TextField
+                {...props}
+                label="Дата"
+                variant="standard"
+                fullWidth
+                margin="normal"
+              />
+            ),
+          }}
+          format="dd.MM.yyyy"
+          defaultValue={new Date()}
+          onChange={date => {
+            if (date) setDate(date)
+          }}
+        />
 
         <Box
           padding="20px"
