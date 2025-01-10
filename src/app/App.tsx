@@ -86,7 +86,7 @@ const App = () => {
       }
 
       if (entity === VoiceEntities.expense) {
-        const [_, category, __, ...otherText] = other
+        const [category, ...otherText] = other
 
         const [description, cost] = otherText.join(" ").split("сумма")
 
