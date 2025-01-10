@@ -1,4 +1,11 @@
-import { Container } from "@mui/material"
+import {
+  Container,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material"
 import s from "./styles.module.scss"
 
 export const TEST_ID = "Settings"
@@ -10,7 +17,27 @@ const Settings = () => (
     className={s.settings}
     data-testid={TEST_ID}
   >
-    <div className={s.settingsContent}>Page Settings</div>
+    <div className={s.settingsContent}>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary="Главная" />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary="Заметки" />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary="Расходы" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </div>
   </Container>
 )
 

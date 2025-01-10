@@ -1,4 +1,6 @@
 import Router from "@/routes"
+import MicNoneIcon from "@mui/icons-material/MicNone"
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice"
 import "./index.scss"
 import {
   AppBar,
@@ -30,8 +32,69 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider"
 import { ru } from "date-fns/locale"
+import { useAppDispatch } from "@/hooks"
+import { addNote } from "@/redux/notes/slice"
+import { format } from "date-fns"
+
+enum VoiceCommands {
+  add = "добавить",
+}
+
+enum VoiceEntities {
+  note = "заметку",
+  expense = "расходы",
+}
 
 const App = () => {
+  const dispatch = useAppDispatch()
+  const [isOnVoice, setIsOnVoice] = useState(false)
+
+  const SpeechRecognition =
+    // @ts-ignore
+    window.SpeechRecognition || window.webkitSpeechRecognition
+  const recognition = new SpeechRecognition()
+
+  recognition.lang = "ru-RU" // Язык, используемый для распознавания речи
+  recognition.interimResults = false // Завершенные результаты
+  recognition.maxAlternatives = 1 // Максимум вариантов
+  const startListening = () => {
+    if (isOnVoice) return
+    setIsOnVoice(true)
+    recognition.start()
+  }
+
+  recognition.onresult = (event: any) => {
+    const transcript = event.results[0][0].transcript
+    // Сохранение заметки, например, вызовом функции добавления заметки
+    setIsOnVoice(false)
+
+    if (typeof transcript !== "string") return
+
+    const [command, entity] = transcript.split(" ")
+
+    const [_, ...text] = transcript.split("заметку")
+
+    if (command === VoiceCommands.add) {
+      if (entity === VoiceEntities.note) {
+        dispatch(
+          addNote({
+            note: text.join(" ").trim(),
+            id: Date.now(),
+            date: format(new Date(), "dd.MM.yyyy"),
+          }),
+        )
+      }
+    }
+  }
+
+  recognition.onerror = (event: any) => {
+    console.error("Ошибка распознавания:", event.error)
+  }
+
+  recognition.onend = () => {
+    setIsOnVoice(false)
+  }
+
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const handleCloseMenu = () => {
@@ -44,7 +107,7 @@ const App = () => {
   const [value, setValue] = useState("main")
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue)
+    if (newValue !== "voic") setValue(newValue)
   }
 
   return (
@@ -153,6 +216,17 @@ const App = () => {
             value="notes"
             icon={<NotesIcon />}
             onClick={() => navigate(getRouteNotes())}
+          />
+          <BottomNavigationAction
+            icon={
+              isOnVoice ? (
+                <KeyboardVoiceIcon fontSize="large" />
+              ) : (
+                <MicNoneIcon fontSize="large" />
+              )
+            }
+            value="voic"
+            onClick={startListening}
           />
           <BottomNavigationAction
             label="Расходы"
