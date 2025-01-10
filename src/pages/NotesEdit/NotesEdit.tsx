@@ -1,18 +1,9 @@
 import { useAppDispatch } from "@/hooks"
 import { addNote } from "@/redux/notes/slice"
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  TextField,
-} from "@mui/material"
+import { Box, Button, Container, TextField } from "@mui/material"
 import { format } from "date-fns"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import MicNoneIcon from "@mui/icons-material/MicNone"
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice"
 import s from "./styles.module.scss"
 
 export const TEST_ID = "NotesEdit"
@@ -22,37 +13,7 @@ const NotesEdit = () => {
 
   const [note, setNote] = useState("")
 
-  const [isOnVoice, setIsOnVoice] = useState(false)
-
   const dispatch = useAppDispatch()
-
-  const SpeechRecognition =
-    // @ts-ignore
-    window.SpeechRecognition || window.webkitSpeechRecognition
-  const recognition = new SpeechRecognition()
-
-  recognition.lang = "ru-RU" // Язык, используемый для распознавания речи
-  recognition.interimResults = false // Завершенные результаты
-  recognition.maxAlternatives = 1 // Максимум вариантов
-  const startListening = () => {
-    setIsOnVoice(true)
-    recognition.start()
-  }
-
-  recognition.onresult = (event: any) => {
-    const transcript = event.results[0][0].transcript
-    // Сохранение заметки, например, вызовом функции добавления заметки
-    setIsOnVoice(false)
-    setNote(transcript)
-  }
-
-  recognition.onerror = (event: any) => {
-    console.error("Ошибка распознавания:", event.error)
-  }
-
-  recognition.onend = () => {
-    setIsOnVoice(false)
-  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -101,7 +62,7 @@ const NotesEdit = () => {
           </Button>
         </Box>
 
-        <Stack
+        {/* <Stack
           alignItems="center"
           justifyContent="center"
           sx={{
@@ -123,7 +84,7 @@ const NotesEdit = () => {
           >
             {isOnVoice ? <KeyboardVoiceIcon /> : <MicNoneIcon />}
           </IconButton>
-        </Stack>
+        </Stack> */}
       </div>
     </Container>
   )
