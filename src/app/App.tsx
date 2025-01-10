@@ -20,7 +20,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   getRouteExpenses,
-  getRouteExpensesCreate,
   getRouteMain,
   getRouteNotes,
   getRouteSettings,
@@ -35,6 +34,7 @@ import { ru } from "date-fns/locale"
 import { useAppDispatch } from "@/hooks"
 import { addNote } from "@/redux/notes/slice"
 import { format } from "date-fns"
+import { addExpense } from "@/redux/expenses/slice"
 
 enum VoiceCommands {
   add = "добавить",
@@ -70,15 +70,31 @@ const App = () => {
 
     if (typeof transcript !== "string") return
 
-    const [command, entity] = transcript.split(" ")
+    console.log(transcript)
 
-    const [_, ...text] = transcript.split("заметку")
+    const [command, entity, ...other] = transcript.split(" ")
 
     if (command === VoiceCommands.add) {
       if (entity === VoiceEntities.note) {
         dispatch(
           addNote({
-            note: text.join(" ").trim(),
+            note: other.join(" "),
+            id: Date.now(),
+            date: format(new Date(), "dd.MM.yyyy"),
+          }),
+        )
+      }
+
+      if (entity === VoiceEntities.expense) {
+        const [_, category, __, ...otherText] = other
+
+        const [description, cost] = otherText.join(" ").split("сумма")
+
+        dispatch(
+          addExpense({
+            cost: cost.replace(/[^0-9]/g, ""),
+            category,
+            description,
             id: Date.now(),
             date: format(new Date(), "dd.MM.yyyy"),
           }),
