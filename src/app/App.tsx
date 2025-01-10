@@ -210,12 +210,14 @@ const App = () => {
             value="main"
             icon={<HomeMaxIcon />}
             onClick={() => navigate(getRouteMain())}
+            sx={{ minWidth: "unset", padding: 0 }}
           />
           <BottomNavigationAction
             label="Заметки"
             value="notes"
             icon={<NotesIcon />}
             onClick={() => navigate(getRouteNotes())}
+            sx={{ minWidth: "unset", padding: 0 }}
           />
           <BottomNavigationAction
             icon={
@@ -227,18 +229,21 @@ const App = () => {
             }
             value="voic"
             onClick={startListening}
+            sx={{ minWidth: "unset", padding: 0 }}
           />
           <BottomNavigationAction
             label="Расходы"
             value="expenses"
             icon={<CurrencyRubleIcon />}
             onClick={() => navigate(getRouteExpenses())}
+            sx={{ minWidth: "unset", padding: 0 }}
           />
           <BottomNavigationAction
             label="Настройки"
             value="settings"
             icon={<SettingsIcon />}
             onClick={() => navigate(getRouteSettings())}
+            sx={{ minWidth: "unset", padding: 0 }}
           />
         </BottomNavigation>
       </Paper>
