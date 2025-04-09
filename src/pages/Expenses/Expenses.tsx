@@ -89,13 +89,13 @@ const Expenses = () => {
               </Box>
 
               <Stack direction="row">
-                <Button onClick={handleEditExpense(id)}>
+                <IconButton onClick={handleEditExpense(id)}>
                   <EditIcon sx={{ color: "#000" }} />
-                </Button>
+                </IconButton>
 
-                <Button onClick={handleOpenDialog(id)}>
+                <IconButton onClick={handleOpenDialog(id)}>
                   <DeleteIcon sx={{ color: "#000" }} />
-                </Button>
+                </IconButton>
               </Stack>
             </Stack>
           </Stack>
