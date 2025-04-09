@@ -66,20 +66,18 @@ const Notes = () => {
       <div className={s.notesContent}>
         {notes.map(({ id, note, date }, i, arr) => (
           <Stack
-            justifyContent="space-between"
-            direction="row"
-            columnGap="15px"
+            // justifyContent="space-between"
+            // direction="row"
+            rowGap="15px"
             key={id}
             sx={{
               borderBottom: i === arr.length - 1 ? "none" : "1px solid grey",
               padding: "10px 0",
             }}
           >
-            <Box>
-              <Typography>{note}</Typography>
-            </Box>
+            <Typography>{note}</Typography>
 
-            <Stack justifyContent="space-between">
+            <Stack direction="row" justifyContent="space-between">
               <Typography textAlign="end">{date}</Typography>
 
               <Stack direction="row">
