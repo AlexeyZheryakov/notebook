@@ -1,3 +1,10 @@
+import { SimpleDialog } from "@/components/SimpleDialog/SimpleDialog"
+import { useAppDispatch, useAppSelector } from "@/hooks"
+import { clearExpense } from "@/redux/expenses/slice"
+import { getRouteExpensesCreate, getRouteExpensesEdit } from "@/routes/router"
+import AddIcon from "@mui/icons-material/Add"
+import EditIcon from "@mui/icons-material/Edit"
+import DeleteIcon from "@mui/icons-material/Delete"
 import {
   Box,
   Button,
@@ -6,12 +13,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
-
-import { SimpleDialog } from "@/components/SimpleDialog/SimpleDialog"
-import { useAppDispatch, useAppSelector } from "@/hooks"
-import { clearExpense } from "@/redux/expenses/slice"
-import { getRouteExpensesCreate, getRouteExpensesEdit } from "@/routes/router"
-import AddIcon from "@mui/icons-material/Add"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import s from "./styles.module.scss"
@@ -65,9 +66,9 @@ const Expenses = () => {
       <div className={s.expensesContent}>
         {expenses.map(({ id, category, cost, description, date }, i, arr) => (
           <Stack
-            alignItems="center"
             justifyContent="space-between"
             direction="row"
+            columnGap="15px"
             key={id}
             sx={{
               borderBottom: i === arr.length - 1 ? "none" : "1px solid grey",
@@ -76,18 +77,27 @@ const Expenses = () => {
           >
             <Box>
               <Typography>{category}</Typography>
+
               <Typography>{description}</Typography>
-              <Button onClick={handleEditExpense(id)} variant="contained">
-                редактировать
-              </Button>
             </Box>
-            <Box>
-              <Typography>{cost} ₽</Typography>
-              <Typography>{date}</Typography>
-              <Button onClick={handleOpenDialog(id)} variant="contained">
-                удалить
-              </Button>
-            </Box>
+
+            <Stack justifyContent="space-between">
+              <Box>
+                <Typography textAlign="end">{cost} ₽</Typography>
+
+                <Typography textAlign="end">{date}</Typography>
+              </Box>
+
+              <Stack direction="row">
+                <Button onClick={handleEditExpense(id)}>
+                  <EditIcon sx={{ color: "#000" }} />
+                </Button>
+
+                <Button onClick={handleOpenDialog(id)}>
+                  <DeleteIcon sx={{ color: "#000" }} />
+                </Button>
+              </Stack>
+            </Stack>
           </Stack>
         ))}
       </div>

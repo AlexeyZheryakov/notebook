@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks"
 import { clearNote } from "@/redux/notes/slice"
 import { getRouteNotesCreate, getRouteNotesEdit } from "@/routes/router"
 import AddIcon from "@mui/icons-material/Add"
+import EditIcon from "@mui/icons-material/Edit"
+import DeleteIcon from "@mui/icons-material/Delete"
 import {
   Box,
   Button,
@@ -64,9 +66,9 @@ const Notes = () => {
       <div className={s.notesContent}>
         {notes.map(({ id, note, date }, i, arr) => (
           <Stack
-            alignItems="center"
             justifyContent="space-between"
             direction="row"
+            columnGap="15px"
             key={id}
             sx={{
               borderBottom: i === arr.length - 1 ? "none" : "1px solid grey",
@@ -75,16 +77,21 @@ const Notes = () => {
           >
             <Box>
               <Typography>{note}</Typography>
-              <Button onClick={handleEditNote(id)} variant="contained">
-                редактировать
-              </Button>
             </Box>
-            <Box>
-              <Typography>{date}</Typography>
-              <Button onClick={handleOpenDialog(id)} variant="contained">
-                удалить
-              </Button>
-            </Box>
+
+            <Stack justifyContent="space-between">
+              <Typography textAlign="end">{date}</Typography>
+
+              <Stack direction="row">
+                <Button onClick={handleEditNote(id)}>
+                  <EditIcon sx={{ color: "#000" }} />
+                </Button>
+
+                <Button onClick={handleOpenDialog(id)}>
+                  <DeleteIcon sx={{ color: "#000" }} />
+                </Button>
+              </Stack>
+            </Stack>
           </Stack>
         ))}
       </div>
