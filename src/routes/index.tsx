@@ -1,3 +1,9 @@
+import { Expenses } from "@/pages/Expenses"
+import { ExpensesEdit } from "@/pages/ExpensesEdit"
+import { Main } from "@/pages/Main"
+import { Notes } from "@/pages/Notes"
+import { NotesEdit } from "@/pages/NotesEdit"
+import { Settings } from "@/pages/Settings"
 import { Route, Routes } from "react-router-dom"
 import {
   getRouteExpenses,
@@ -7,14 +13,9 @@ import {
   getRouteMain,
   getRouteNotes,
   getRouteNotesCreate,
+  getRouteNotesEdit,
   getRouteSettings,
 } from "./router"
-import { Main } from "@/pages/Main"
-import { Expenses } from "@/pages/Expenses"
-import { ExpensesEdit } from "@/pages/ExpensesEdit"
-import { Settings } from "@/pages/Settings"
-import { Notes } from "@/pages/Notes"
-import { NotesEdit } from "@/pages/NotesEdit"
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
       <Route path={getRouteSettings()} element={<Settings />} />
       <Route path={getRouteNotes()} element={<Notes />} />
       <Route path={getRouteNotesCreate()} element={<NotesEdit />} />
+      <Route path={getRouteNotesEdit(":id")} element={<NotesEdit />} />
       <Route path="*" element={<></>} />
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>

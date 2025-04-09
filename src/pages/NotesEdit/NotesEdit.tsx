@@ -1,30 +1,52 @@
-import { useAppDispatch } from "@/hooks"
-import { addNote } from "@/redux/notes/slice"
+import { useAppDispatch, useAppSelector } from "@/hooks"
+import { getNoteById } from "@/redux/notes/selectors"
+import { addNote, changeNote } from "@/redux/notes/slice"
 import { Box, Button, Container, TextField } from "@mui/material"
 import { format } from "date-fns"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import s from "./styles.module.scss"
 
 export const TEST_ID = "NotesEdit"
 
 const NotesEdit = () => {
+  const { id = "" } = useParams()
+
+  const isEdit = !!id
+
+  const note = useAppSelector(state => getNoteById(state, id))
+
   const navigate = useNavigate()
 
-  const [note, setNote] = useState("")
+  const defaultValues = isEdit && note ? note.note : ""
+
+  const [value, setValue] = useState(defaultValues)
 
   const dispatch = useAppDispatch()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(
-      addNote({
-        note,
-        id: Date.now(),
-        date: format(new Date(), "dd.MM.yyyy"),
-      }),
-    )
-    setNote("")
+
+    if (isEdit) {
+      dispatch(
+        changeNote({
+          note: value,
+          id: note ? note.id : 0,
+          date: note ? note.date : "",
+        }),
+      )
+    } else {
+      dispatch(
+        addNote({
+          note: value,
+          id: Date.now(),
+          date: format(new Date(), "dd.MM.yyyy"),
+        }),
+      )
+    }
+
+    setValue("")
+
     navigate(-1)
   }
 
@@ -40,12 +62,12 @@ const NotesEdit = () => {
       <div className={s.notesEditContent}>
         <TextField
           id="outlined-multiline-flexible"
-          label="Multiline"
+          label="Заметка"
           multiline
-          maxRows={4}
+          maxRows={20}
           fullWidth
-          onChange={e => setNote(e.target.value)}
-          value={note}
+          onChange={e => setValue(e.target.value)}
+          value={value}
         />
 
         <Box
@@ -57,8 +79,8 @@ const NotesEdit = () => {
             left: 0,
           }}
         >
-          <Button fullWidth variant="contained" disabled={!note} type="submit">
-            Добавить
+          <Button fullWidth variant="contained" disabled={!value} type="submit">
+            {isEdit ? "Сохранить" : "Добавить"}
           </Button>
         </Box>
 

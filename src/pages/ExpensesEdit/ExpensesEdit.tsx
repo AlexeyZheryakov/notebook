@@ -1,13 +1,15 @@
-import { useAppDispatch } from "@/hooks"
-import { addExpense } from "@/redux/expenses/slice"
+import { useAppDispatch, useAppSelector } from "@/hooks"
+import { addExpense, changeExpense } from "@/redux/expenses/slice"
 import { Box, Button, Container, TextField } from "@mui/material"
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker"
 import { format } from "date-fns"
 import { forwardRef, useState } from "react"
 import type { NumericFormatProps } from "react-number-format"
 import { NumericFormat } from "react-number-format"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import s from "./styles.module.scss"
+import { getExpenseById } from "@/redux/expenses/selectors"
+import { getDateFromString } from "@/utils/getDateFromString"
 
 export const TEST_ID = "ExpensesEdit"
 
@@ -41,15 +43,20 @@ const NumericFormatCustom = forwardRef<NumericFormatProps, CustomProps>(
 )
 
 const ExpensesEdit = () => {
+  const { id = "" } = useParams()
+
+  const isEdit = !!id
+
+  const expense = useAppSelector(state => getExpenseById(state, id))
+
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
 
-  const [values, setValues] = useState({
-    cost: "",
-    category: "",
-    description: "",
-  })
+  const defaultValues =
+    isEdit && expense ? expense : { cost: "", category: "", description: "" }
+
+  const [values, setValues] = useState(defaultValues)
 
   const [date, setDate] = useState<Date>(new Date())
 
@@ -62,18 +69,31 @@ const ExpensesEdit = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(
-      addExpense({
-        ...values,
-        id: Date.now(),
-        date: format(date, "dd.MM.yyyy"),
-      }),
-    )
+
+    if (isEdit) {
+      dispatch(
+        changeExpense({
+          ...values,
+          id: expense ? expense.id : 0,
+          date: format(date, "dd.MM.yyyy"),
+        }),
+      )
+    } else {
+      dispatch(
+        addExpense({
+          ...values,
+          id: Date.now(),
+          date: format(date, "dd.MM.yyyy"),
+        }),
+      )
+    }
+
     setValues({
       cost: "",
       category: "",
       description: "",
     })
+
     navigate(-1)
   }
 
@@ -133,7 +153,9 @@ const ExpensesEdit = () => {
             ),
           }}
           format="dd.MM.yyyy"
-          defaultValue={new Date()}
+          defaultValue={
+            isEdit && expense ? getDateFromString(expense.date) : new Date()
+          }
           onChange={date => {
             if (date) setDate(date)
           }}
@@ -154,7 +176,7 @@ const ExpensesEdit = () => {
             disabled={!values.cost || !values.category || !values.description}
             type="submit"
           >
-            Добавить
+            {isEdit ? "Сохранить" : "Добавить"}
           </Button>
         </Box>
       </div>

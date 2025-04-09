@@ -1,6 +1,7 @@
+import { SimpleDialog } from "@/components/SimpleDialog/SimpleDialog"
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import { clearNote } from "@/redux/notes/slice"
-import { getRouteNotesCreate } from "@/routes/router"
+import { getRouteNotesCreate, getRouteNotesEdit } from "@/routes/router"
 import AddIcon from "@mui/icons-material/Add"
 import {
   Box,
@@ -10,20 +11,47 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import s from "./styles.module.scss"
 
 export const TEST_ID = "Notes"
 
 const Notes = () => {
+  const [open, setOpen] = useState(false)
+
+  const [id, setId] = useState<number | null>(null)
+
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
 
   const { notes } = useAppSelector(state => state.notesStore)
 
-  const handleRemoveNote = (id: number) => () => {
+  const handleRemoveNote = () => {
+    if (!id) return
+
     dispatch(clearNote(id))
+
+    setOpen(false)
+
+    setId(null)
+  }
+
+  const handleEditNote = (id: number) => () => {
+    navigate(getRouteNotesEdit(id))
+  }
+
+  const handleOpenDialog = (id: number) => () => {
+    setOpen(true)
+
+    setId(id)
+  }
+
+  const handleCloseDialog = () => {
+    setOpen(false)
+
+    setId(null)
   }
 
   return (
@@ -47,13 +75,13 @@ const Notes = () => {
           >
             <Box>
               <Typography>{note}</Typography>
-              <Button onClick={() => {}} variant="contained">
+              <Button onClick={handleEditNote(id)} variant="contained">
                 редактировать
               </Button>
             </Box>
             <Box>
               <Typography>{date}</Typography>
-              <Button onClick={handleRemoveNote(id)} variant="contained">
+              <Button onClick={handleOpenDialog(id)} variant="contained">
                 удалить
               </Button>
             </Box>
@@ -85,6 +113,21 @@ const Notes = () => {
           <AddIcon />
         </IconButton>
       </Stack>
+
+      <SimpleDialog
+        open={open}
+        onClose={handleCloseDialog}
+        title="Подтверждение"
+        actions={
+          <>
+            <Button onClick={handleCloseDialog}>Отмена</Button>
+
+            <Button onClick={handleRemoveNote}>Удалить</Button>
+          </>
+        }
+      >
+        <Typography>Вы уверены, что хотите удалить запись?</Typography>
+      </SimpleDialog>
     </Container>
   )
 }

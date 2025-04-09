@@ -29,6 +29,16 @@ export const notesSlice = createSlice({
       state.notes.unshift(payload)
       localStorage.setItem(NAME, JSON.stringify(state.notes))
     },
+    changeNote: (state, { payload }: PayloadAction<INote>) => {
+      state.notes = state.notes.map(expense => {
+        if (expense.id === payload.id) {
+          return payload
+        }
+
+        return expense
+      })
+      localStorage.setItem(NAME, JSON.stringify(state.notes))
+    },
     clearNote: (state, { payload }: PayloadAction<number>) => {
       state.notes = state.notes.filter(item => item.id !== payload)
       localStorage.setItem(NAME, JSON.stringify(state.notes))
@@ -36,6 +46,6 @@ export const notesSlice = createSlice({
   },
 })
 
-export const { addNote, clearNote } = notesSlice.actions
+export const { addNote, clearNote, changeNote } = notesSlice.actions
 
 export default notesSlice.reducer
