@@ -66,9 +66,7 @@ const Notes = () => {
       <div className={s.notesContent}>
         {notes.map(({ id, note, date }, i, arr) => (
           <Stack
-            // justifyContent="space-between"
-            // direction="row"
-            rowGap="15px"
+            rowGap="10px"
             key={id}
             sx={{
               borderBottom: i === arr.length - 1 ? "none" : "1px solid grey",
@@ -77,17 +75,21 @@ const Notes = () => {
           >
             <Typography>{note}</Typography>
 
-            <Stack direction="row" justifyContent="space-between">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
               <Typography textAlign="end">{date}</Typography>
 
               <Stack direction="row">
-                <Button onClick={handleEditNote(id)}>
+                <IconButton onClick={handleEditNote(id)}>
                   <EditIcon sx={{ color: "#000" }} />
-                </Button>
+                </IconButton>
 
-                <Button onClick={handleOpenDialog(id)}>
+                <IconButton onClick={handleOpenDialog(id)}>
                   <DeleteIcon sx={{ color: "#000" }} />
-                </Button>
+                </IconButton>
               </Stack>
             </Stack>
           </Stack>
