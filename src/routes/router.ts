@@ -13,3 +13,4 @@ export const getRouteExpensesDetails = (id: string | number) =>
 export const getRouteSettings = () => "/settings"
 export const getRouteNotes = () => "/notes"
 export const getRouteNotesCreate = () => "/notes/new"
+export const getRouteNotesEdit = (id: string | number) => `/notes/${id}/edit`

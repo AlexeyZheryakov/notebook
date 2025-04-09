@@ -7,28 +7,52 @@ import {
   Typography,
 } from "@mui/material"
 
-import s from "./styles.module.scss"
+import { SimpleDialog } from "@/components/SimpleDialog/SimpleDialog"
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import { clearExpense } from "@/redux/expenses/slice"
-import { useNavigate } from "react-router-dom"
 import { getRouteExpensesCreate, getRouteExpensesEdit } from "@/routes/router"
 import AddIcon from "@mui/icons-material/Add"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import s from "./styles.module.scss"
 
 export const TEST_ID = "Expenses"
 
 const Expenses = () => {
+  const [open, setOpen] = useState(false)
+
+  const [id, setId] = useState<number | null>(null)
+
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
 
   const { expenses } = useAppSelector(state => state.expensesStore)
 
-  const handleRemoveExpense = (id: number) => () => {
+  const handleRemoveExpense = () => {
+    if (!id) return
+
     dispatch(clearExpense(id))
+
+    setOpen(false)
+
+    setId(null)
   }
 
   const handleEditExpense = (id: number) => () => {
     navigate(getRouteExpensesEdit(id))
+  }
+
+  const handleOpenDialog = (id: number) => () => {
+    setOpen(true)
+
+    setId(id)
+  }
+
+  const handleCloseDialog = () => {
+    setOpen(false)
+
+    setId(null)
   }
 
   return (
@@ -60,7 +84,7 @@ const Expenses = () => {
             <Box>
               <Typography>{cost} ₽</Typography>
               <Typography>{date}</Typography>
-              <Button onClick={handleRemoveExpense(id)} variant="contained">
+              <Button onClick={handleOpenDialog(id)} variant="contained">
                 удалить
               </Button>
             </Box>
@@ -92,6 +116,21 @@ const Expenses = () => {
           <AddIcon />
         </IconButton>
       </Stack>
+
+      <SimpleDialog
+        open={open}
+        onClose={handleCloseDialog}
+        title="Подтверждение"
+        actions={
+          <>
+            <Button onClick={handleCloseDialog}>Отмена</Button>
+
+            <Button onClick={handleRemoveExpense}>Удалить</Button>
+          </>
+        }
+      >
+        <Typography>Вы уверены, что хотите удалить запись?</Typography>
+      </SimpleDialog>
     </Container>
   )
 }
