@@ -26,8 +26,6 @@ const Main = () => {
 
   const [month, setMonth] = useState("all")
 
-  console.log(month)
-
   const { expenses } = useAppSelector(state => state.expensesStore)
 
   const expensesByMonth = expenses.reduce(
@@ -67,11 +65,12 @@ const Main = () => {
   }, [])
 
   const handleClick = async () => {
-    const res = await handlAskDeepSeek()
-
     if (!userId) return
 
-    telegramService.api.sendMessage(userId, res)
+    telegramService.api.sendMessage(
+      userId,
+      `Расходы за ${month === "all" ? "все месяца" : month}: ${sumOfExpenses} ₽`,
+    )
   }
 
   return (
