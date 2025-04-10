@@ -3,6 +3,7 @@ import { useAppSelector } from "@/hooks"
 import type { IExpense } from "@/redux/expenses/slice"
 import { telegramService } from "@/telegram/ensureTelegramBot"
 import {
+  Button,
   Container,
   FormControl,
   InputLabel,
@@ -16,13 +17,16 @@ import s from "./styles.module.scss"
 
 export const START_COMAND = "start"
 
-export const MENU_COMAND = "menu"
-
 export const TEST_ID = "Main"
 
 const Main = () => {
+  const userId = localStorage.getItem("userId")
+
   const [deepseekResponse, setDeepseekResponse] = useState("")
+
   const [month, setMonth] = useState("all")
+
+  console.log(month)
 
   const { expenses } = useAppSelector(state => state.expensesStore)
 
@@ -46,10 +50,12 @@ const Main = () => {
 
   const handlAskDeepSeek = async () => {
     const res = await deepSeekService.ask(
-      // `посчитай мои расходы ${JSON.stringify(expenses)}`,
-      `Выдай мне мотивирующее высказывание знаминитого человека, это могут быть кто угодно из любых областей наций и философий. Только высказывание, без лишнего текста, дай случайную, никогда не повторяющуюся цитату`,
+      `посчитай мои расходы за ${month} ${JSON.stringify(expenses)}`,
     )
+
     setDeepseekResponse(res)
+
+    return res
   }
 
   useEffect(() => {
@@ -60,8 +66,12 @@ const Main = () => {
     // Start the bot (using long polling)
   }, [])
 
-  const handleClick = () => {
-    telegramService.api.sendMessage(1641096900, "привет")
+  const handleClick = async () => {
+    const res = await handlAskDeepSeek()
+
+    if (!userId) return
+
+    telegramService.api.sendMessage(userId, res)
   }
 
   return (
@@ -91,6 +101,8 @@ const Main = () => {
         </FormControl>
 
         <Typography>Расходы {sumOfExpenses.toLocaleString("ru")} ₽</Typography>
+
+        <Button onClick={handleClick}>Отправить отчёт о расходах</Button>
 
         <ReactMarkdown>{deepseekResponse}</ReactMarkdown>
       </div>
